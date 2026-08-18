@@ -1,0 +1,6 @@
+train: /home/z/my-project/forklift-detector/data_v4/train/images
+val: /home/z/my-project/forklift-detector/data_v4/valid/images
+test: /home/z/my-project/forklift-detector/data_v4/test/images
+
+nc: 2
+names: ['forklift', 'person']

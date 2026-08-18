@@ -1,0 +1,77 @@
+# Forklift Detection System Configuration
+
+# --- Model Settings ---
+model:
+  # Path to trained YOLOv8 model (.pt or .onnx)
+  # "models/best.pt" = v2 model (1 class: forklift only, mAP50 99.5% on single-image dataset)
+  # "models/best_v4.pt" = v4 model (2 classes: forklift + person, mAP50 88% on 1080-image Roboflow dataset)
+  weights: "models/best_v4.pt"
+  # Class names for the v4 model (forklift=0, person=1)
+  class_names: ["forklift", "person"]
+  # Inference image size (pixels)
+  imgsz: 320
+  # Confidence threshold (0.0 - 1.0)
+  conf_threshold: 0.35
+  # IoU threshold for NMS (0.0 - 1.0)
+  iou_threshold: 0.45
+  # Device: "0" for GPU, "cpu" for CPU, "mps" for Apple Silicon
+  device: "cpu"
+  # Max detections per frame
+  max_detections: 20
+
+# --- Input Settings ---
+input:
+  # Source: 0 = webcam, "rtsp://..." = IP camera, "path/to/video.mp4" = video file
+  source: 0
+  # Resize frame before inference (width, height). Set to 0 to skip resizing.
+  resize_width: 0
+  resize_height: 0
+  # Skip every N frames for performance
+  frame_skip: 0
+
+# --- Safety Zone (ROI) ---
+safety_zone:
+  # Enable safety zone detection
+  enabled: false
+  # Define polygon points as [[x1,y1], [x2,y2], ...]
+  # Example for a rectangular zone: [[100,100], [500,100], [500,400], [100,400]]
+  points: []
+  # Alert only when forklift is INSIDE or OUTSIDE the zone
+  # "inside" = alert when forklift enters zone
+  # "outside" = alert when forklift is outside zone
+  mode: "inside"
+  # Zone polygon color (BGR)
+  color: [0, 255, 255]  # Yellow
+
+# --- Alert Settings ---
+alerts:
+  # Enable console logging of detections
+  log_console: true
+  # Log level: DEBUG, INFO, WARNING, ERROR
+  log_level: "INFO"
+  # Save detection results to CSV
+  log_csv: true
+  csv_path: "detections.csv"
+  # Play sound alert on detection
+  sound_alert: false
+  # Webhook URL for alerts (Slack, Discord, custom)
+  webhook_url: ""
+  # Minimum time between webhook alerts (seconds) to avoid spam
+  webhook_cooldown: 30
+
+# --- Display Settings ---
+display:
+  # Show detection overlay on frame
+  show_overlay: true
+  # Bounding box color (BGR)
+  box_color: [0, 255, 0]  # Green
+  # Box line thickness
+  box_thickness: 2
+  # Label font scale
+  font_scale: 0.7
+  # Show FPS counter
+  show_fps: true
+  # Show confidence score
+  show_confidence: true
+  # Window name
+  window_name: "Forklift Detector"
