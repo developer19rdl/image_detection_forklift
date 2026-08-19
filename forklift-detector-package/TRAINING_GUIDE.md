@@ -76,6 +76,8 @@ pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
 ```bash
 python main_image.py --source path/to/image.jpg --output results/ --show
 python main_image.py --source path/to/images_folder/ --output results/ --show
+python main_image.py "C:\Users\Administrator\Downloads\Untitled.jpg" --show
+
 ```
 
 ### 1.3 Run Detection on Webcam
